@@ -13,6 +13,13 @@ screen.tracer(0)
 # Creating the snake
 snake = Snake()
 
+# Key strokes
+screen.listen()
+screen.onkey(snake.up, 'w')
+screen.onkey(snake.down, 's')
+screen.onkey(snake.left, 'a')
+screen.onkey(snake.right, 'd')
+
 # Making the game screen looping
 game_is_on = True
 while game_is_on:
