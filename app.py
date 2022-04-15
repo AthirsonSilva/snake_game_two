@@ -6,7 +6,6 @@ from turtle import Screen
 from turtle import Turtle
 
 # Declaring the necessary variables
-turtle = Turtle()
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.bgcolor('black')
@@ -33,17 +32,31 @@ screen.onkey(snake.right, 'd')
 game_is_on = True
 while game_is_on:
     screen.update()
-    scoreboard.write_score()
+    scoreboard.write_score(arg=f'Score: {scoreboard.score}', align='center', x=0, y=270)
     sleep(0.1)
 
     snake.move()
 
-    # Detec collision with food
+    # Detect collision with food
     if snake.snake_head.distance(food) < 15:
         food.refresh()
         scoreboard.clear()
+        snake.extend()
         scoreboard.score += 1
 
+    # Detect collision with walls
+    if snake.snake_head.xcor() > 290 or snake.snake_head.xcor() < -290 or snake.snake_head.ycor() > 290 or snake.snake_head.ycor() < -290:
+        game_is_on = False
+        scoreboard.game_over()
+
+    # Detect collision with tail
+    for segment in snake.segments:
+        if segment == snake.snake_head:
+            pass
+
+        elif snake.snake_head.distance(segment) < 10:
+            game_is_on = False
+            scoreboard.game_over()
 
 # Closing the screen onclick
 screen.exitonclick()

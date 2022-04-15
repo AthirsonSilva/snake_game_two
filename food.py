@@ -16,5 +16,6 @@ class Food(Turtle):
         self.goto(random_x, random_y)
 
     def refresh(self):
+        """ Refresh the food location """
         random_x, random_y = randint(-200, 200), randint(-200, 200)
         self.goto(random_x, random_y)

@@ -9,11 +9,12 @@ LEFT = 180
 RIGHT = 0
 
 
-class Snake:
+class Snake(Turtle):
     """ Snake character class"""
 
     def __init__(self):
         """ Snake class basic body list """
+        super().__init__()
         self.segments = list()
         self.create_snake()
         self.snake_head = self.segments[0]
@@ -22,11 +23,7 @@ class Snake:
         """ Looping through the starting 3 pieces of the snake character """
 
         for position in STARTING_POSITION:
-            new_segment = Turtle(shape='square')
-            new_segment.color('green')
-            new_segment.penup()
-            new_segment.goto(position)
-            self.segments.append(new_segment)
+            self.add_segment(position)
 
     def move(self):
         """ Move the snake """
@@ -36,6 +33,17 @@ class Snake:
             self.segments[segment_number].goto(new_x, new_y)
 
         self.snake_head.forward(MOVE_DISTANCE)
+
+    def add_segment(self, position):
+        """ Add a new segment after eating food """
+        new_segment = Turtle(shape='square')
+        new_segment.color('green')
+        new_segment.penup()
+        new_segment.goto(position)
+        self.segments.append(new_segment)
+
+    def extend(self):
+        self.add_segment(self.segments[-1].position())
 
     def up(self):
         """ Move the snake up """
@@ -56,3 +64,7 @@ class Snake:
         """ Move the snake right """
         if self.snake_head.heading() != LEFT:
             self.snake_head.setheading(RIGHT)
+
+    def tail_collision(self):
+        """ Manages the collision between the head and the tail """
+        pass
